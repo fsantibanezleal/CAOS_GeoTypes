@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "geotypes"
+# PEP 440 form of the display version X.XX.XXX (see CHANGELOG.md + geotypes.__version__).
+version = "0.1.0"
+description = "Shape catalogues of physical response signals: derivative preprocessing, banded DTW, PAM k-medoids, conformal assignment, RF/SHAP attribution. Pure-numpy core (Pyodide-safe)."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Felipe Santibáñez-Leal" }]
+keywords = ["time-series", "clustering", "dtw", "k-medoids", "conformal-prediction", "well-testing", "pressure-transient"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Physics",
+]
+dependencies = ["numpy>=1.26", "scipy>=1.11"]
+
+[project.optional-dependencies]
+fast = ["dtaidistance>=2.3"]            # C-accelerated pairwise DTW matrices (offline)
+attr = ["scikit-learn>=1.4", "shap>=0.45", "pandas>=2.0"]  # RF + SHAP attribution layer
+dev = ["pytest>=8", "ruff>=0.4"]
+
+[project.urls]
+Repository = "https://github.com/fsantibanezleal/CAOS_GeoTypes"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+src = ["src", "tests"]

@@ -1,0 +1,17 @@
+# environments
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+dist/
+
+# editors / OS
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
+
+# local scratch
+*.tmp
+tmp_*
