@@ -20,7 +20,7 @@ Numerical inversion: the Gaver-Stehfest algorithm (Stehfest 1970, CACM 13(1):47-
 
 from __future__ import annotations
 
-from math import comb, factorial
+from math import factorial
 
 import numpy as np
 from scipy.special import k0
