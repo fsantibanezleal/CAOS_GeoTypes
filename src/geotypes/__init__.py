@@ -33,7 +33,7 @@ from geotypes.synthetic import (
     generate_warren_root_ensemble,
 )
 
-__version__ = "0.1.0"          # PEP 440; display form 0.01.000 (CHANGELOG)
+__version__ = "0.1.1"          # PEP 440; display form 0.01.001 (CHANGELOG)
 __display_version__ = "0.01.000"
 
 __all__ = [
