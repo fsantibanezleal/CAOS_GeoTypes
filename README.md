@@ -11,6 +11,11 @@ guarantees**. It packages the methodology of Kamel Targhi et al. (2026, Computat
 DOI [10.1007/s10596-026-10459-w](https://doi.org/10.1007/s10596-026-10459-w)) as a reusable,
 permissively-licensed library, and adds a conformal-prediction assignment layer on top.
 
+> **Install name vs import name.** The PyPI distribution is **`caos-geotypes`**
+> (`pip install caos-geotypes`); the import is `import geotypes`. The bare distribution name
+> `geotypes` is taken by an unrelated geospatial-utilities package — do not co-install it with this
+> library: both would claim the `geotypes` top-level module (ADR-0061 distribution-rename route).
+
 **Why this package exists** (mid-2026 gap): scikit-learn-extra (k-medoids) is unmaintained, the
 fast Rust `kmedoids` is GPL-3, tslearn/aeon drag numba/native dependencies that do not run in
 Pyodide. The `geotypes` **core is pure numpy/scipy** — it runs unchanged offline and in the

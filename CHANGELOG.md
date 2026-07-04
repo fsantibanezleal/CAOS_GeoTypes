@@ -3,6 +3,17 @@
 All notable changes to `geotypes`. Display format `X.XX.XXX` (CAOS convention); PEP 440 mirror in
 `pyproject.toml`. Tag every release.
 
+## [0.01.001] — 2026-07-03
+
+### Changed
+- PyPI distribution name set to **`caos-geotypes`** (the bare `geotypes` is taken on PyPI by an
+  unrelated geospatial package; ADR-0061 route: rename the distribution, keep `import geotypes`).
+  Co-install collision documented in the README.
+
+### Added
+- `publish-pypi.yml` (Trusted Publishing / OIDC) — publishing awaits the pending-publisher
+  registration and the explicit opt-in to publish (repo stays private until then).
+
 ## [0.01.000] — 2026-07-03
 
 ### Added
