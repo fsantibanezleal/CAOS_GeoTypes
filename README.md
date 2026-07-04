@@ -1,19 +1,24 @@
-# geotypes — shape catalogues of physical response signals
+# pygeotypes — shape catalogues of physical response signals
 
 [![CI](https://img.shields.io/github/actions/workflow/status/fsantibanezleal/CAOS_GeoTypes/ci.yml?branch=main&label=CI)](https://github.com/fsantibanezleal/CAOS_GeoTypes/actions)
 [![License](https://img.shields.io/github/license/fsantibanezleal/CAOS_GeoTypes)](LICENSE)
 [![Version](https://img.shields.io/github/v/tag/fsantibanezleal/CAOS_GeoTypes?label=version&sort=semver)](https://github.com/fsantibanezleal/CAOS_GeoTypes/tags)
 
-`geotypes` builds a **catalogue of behaviour types** from response signals whose *shape* reflects
+`pygeotypes` builds a **catalogue of behaviour types** from response signals whose *shape* reflects
 the underlying physical system — pressure transients of fractured reservoirs, hydrogeology pumping
 tests, thermal response tests — and assigns new signals to that catalogue **with statistical
 guarantees**. It packages the methodology of Kamel Targhi et al. (2026, Computational Geosciences,
 DOI [10.1007/s10596-026-10459-w](https://doi.org/10.1007/s10596-026-10459-w)) as a reusable,
 permissively-licensed library, and adds a conformal-prediction assignment layer on top.
 
+> **Naming.** `pip install pygeotypes` · `import pygeotypes` — distribution and import match.
+> The bare name `geotypes` is taken on PyPI by an unrelated geospatial-utilities package; this
+> library is unrelated to it and shares no module names with it. "GeoTypes" itself is the term of
+> the methodology paper (the catalogue of flow-behaviour types).
+
 **Why this package exists** (mid-2026 gap): scikit-learn-extra (k-medoids) is unmaintained, the
 fast Rust `kmedoids` is GPL-3, tslearn/aeon drag numba/native dependencies that do not run in
-Pyodide. The `geotypes` **core is pure numpy/scipy** — it runs unchanged offline and in the
+Pyodide. The `pygeotypes` **core is pure numpy/scipy** — it runs unchanged offline and in the
 browser (Pyodide) — with optional accelerated/attribution extras.
 
 ## The pipeline
@@ -38,20 +43,20 @@ which behaviours exist · which one is this signal · what controls each behavio
 ## Install
 
 ```bash
-pip install geotypes            # pure core (numpy + scipy)
-pip install geotypes[fast]      # + dtaidistance (C-fast offline DTW matrices)
-pip install geotypes[attr]      # + scikit-learn + shap (attribution layer)
+pip install pygeotypes            # pure core (numpy + scipy)
+pip install pygeotypes[fast]      # + dtaidistance (C-fast offline DTW matrices)
+pip install pygeotypes[attr]      # + scikit-learn + shap (attribution layer)
 ```
 
 ## Quickstart
 
 ```python
 import numpy as np
-from geotypes import (
+from pygeotypes import (
     generate_warren_root_ensemble, prepare_curves, dtw_matrix,
     pam_kmedoids, select_k, build_catalogue, ConformalAssigner, nearest_medoid,
 )
-from geotypes.preprocess import prepare_curves
+from pygeotypes.preprocess import prepare_curves
 
 # 1. an ensemble of dual-porosity pressure responses (or bring your own curves)
 ens = generate_warren_root_ensemble(200, seed=0)
@@ -82,13 +87,13 @@ out.out_of_catalogue      # honest "this shape is not in the catalogue" flag
 
 | Module | What | Deps |
 |---|---|---|
-| `geotypes.preprocess` | log resampling, Bourdet derivative (log-window L), second derivative p'', normalization, `prepare_curves` | numpy |
-| `geotypes.distance` | banded DTW (numpy DP), pairwise matrices (optional dtaidistance backend, parity-tested), live `distances_to_references` | numpy (+fast) |
-| `geotypes.cluster` | PAM k-medoids on precomputed distances, silhouette-from-distances, `select_k` | numpy |
-| `geotypes.catalogue` | the `Catalogue` artifact: medoids + labels + preprocessing + provenance, exact JSON round-trip | numpy |
-| `geotypes.assign` | nearest-medoid + `ConformalAssigner` (class-conditional split-conformal: p-values, prediction sets, OOD) | numpy |
-| `geotypes.attribute` | Spearman correlation pruning, RF with accuracy gate, TreeSHAP + permutation importance cross-check | [attr] |
-| `geotypes.synthetic` | Warren-Root dual-porosity + homogeneous radial generators (Gaver-Stehfest inversion), seeded ensembles | numpy+scipy |
+| `pygeotypes.preprocess` | log resampling, Bourdet derivative (log-window L), second derivative p'', normalization, `prepare_curves` | numpy |
+| `pygeotypes.distance` | banded DTW (numpy DP), pairwise matrices (optional dtaidistance backend, parity-tested), live `distances_to_references` | numpy (+fast) |
+| `pygeotypes.cluster` | PAM k-medoids on precomputed distances, silhouette-from-distances, `select_k` | numpy |
+| `pygeotypes.catalogue` | the `Catalogue` artifact: medoids + labels + preprocessing + provenance, exact JSON round-trip | numpy |
+| `pygeotypes.assign` | nearest-medoid + `ConformalAssigner` (class-conditional split-conformal: p-values, prediction sets, OOD) | numpy |
+| `pygeotypes.attribute` | Spearman correlation pruning, RF with accuracy gate, TreeSHAP + permutation importance cross-check | [attr] |
+| `pygeotypes.synthetic` | Warren-Root dual-porosity + homogeneous radial generators (Gaver-Stehfest inversion), seeded ensembles | numpy+scipy |
 
 ## Guarantees & honesty
 

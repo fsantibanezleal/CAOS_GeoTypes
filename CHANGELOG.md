@@ -1,7 +1,26 @@
 # Changelog
 
-All notable changes to `geotypes`. Display format `X.XX.XXX` (CAOS convention); PEP 440 mirror in
+All notable changes to `pygeotypes`. Display format `X.XX.XXX` (CAOS convention); PEP 440 mirror in
 `pyproject.toml`. Tag every release.
+
+## [0.01.002] — 2026-07-03
+
+### Changed
+- **Package renamed to `pygeotypes`** (distribution AND import): the bare `geotypes` is taken on
+  PyPI by an unrelated geospatial package, and an internal-prefix distribution (`caos-…`) carries
+  no public meaning — Felipe's call. `import pygeotypes` everywhere; the GitHub repo keeps its
+  internal CAOS_GeoTypes name (like CAOS_MINEHAUL/minehaulsim). Consumers update one import.
+
+## [0.01.001] — 2026-07-03
+
+### Changed
+- PyPI distribution name set to **`pygeotypes`** (the bare `pygeotypes` is taken on PyPI by an
+  unrelated geospatial package; ADR-0061 route: rename the distribution, keep `import pygeotypes`).
+  Co-install collision documented in the README.
+
+### Added
+- `publish-pypi.yml` (Trusted Publishing / OIDC) — publishing awaits the pending-publisher
+  registration and the explicit opt-in to publish (repo stays private until then).
 
 ## [0.01.000] — 2026-07-03
 

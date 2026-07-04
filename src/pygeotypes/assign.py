@@ -22,8 +22,8 @@ from pathlib import Path
 
 import numpy as np
 
-from geotypes.catalogue import Catalogue
-from geotypes.distance import distances_to_references
+from pygeotypes.catalogue import Catalogue
+from pygeotypes.distance import distances_to_references
 
 __all__ = ["nearest_medoid", "ConformalAssigner", "ConformalResult"]
 
