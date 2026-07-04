@@ -1,4 +1,4 @@
-"""Attribution: which descriptors control which GeoType (offline lane; extra `geotypes[attr]`).
+"""Attribution: which descriptors control which GeoType (offline lane; extra `pygeotypes[attr]`).
 
 Standard recipe (the paper's, hardened against its known pitfalls):
 
@@ -80,7 +80,7 @@ def attribute_geotypes(
         from sklearn.model_selection import train_test_split
     except ImportError as e:  # pragma: no cover
         raise ImportError(
-            "attribution requires the [attr] extra: pip install geotypes[attr]"
+            "attribution requires the [attr] extra: pip install pygeotypes[attr]"
         ) from e
 
     X = np.asarray(X, dtype=float)

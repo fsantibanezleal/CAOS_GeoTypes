@@ -27,18 +27,18 @@ tests between backends.
 
 | Lane | What runs | Deps |
 |---|---|---|
-| **Offline** (pipeline, `.venv`) | full pairwise DTW matrix (dtaidistance), PAM over K range, catalogue build, calibration, RF+SHAP attribution → all baked to JSON | `geotypes[fast,attr]` |
-| **Live** (browser, Pyodide) | preprocess one curve → K DTW distances to medoids (numpy DP) → conformal p-values from baked calibration scores | `geotypes` core only |
+| **Offline** (pipeline, `.venv`) | full pairwise DTW matrix (dtaidistance), PAM over K range, catalogue build, calibration, RF+SHAP attribution → all baked to JSON | `pygeotypes[fast,attr]` |
+| **Live** (browser, Pyodide) | preprocess one curve → K DTW distances to medoids (numpy DP) → conformal p-values from baked calibration scores | `pygeotypes` core only |
 
 The `Catalogue` + `ConformalAssigner` JSON round-trips are the contract between the lanes: the
 offline side bakes them, the live side loads them. Nothing recomputes clustering in the browser.
 
 ## API stability
 
-Public API = what `geotypes.__init__` exports. `0.x`: breaking changes allowed with a CHANGELOG
+Public API = what `pygeotypes.__init__` exports. `0.x`: breaking changes allowed with a CHANGELOG
 entry; the JSON artifacts carry `schema_version` so consumers can gate. The package is consumed by
 FlowDNA (CAOS_RES_FlowDNA `flowdnalab`), whose domain layer (GeoDFN ensembles, open-DARTS
-simulation, fracture descriptors, contracts) deliberately stays OUT of this package: `geotypes` is
+simulation, fracture descriptors, contracts) deliberately stays OUT of this package: `pygeotypes` is
 signal-shape machinery, not reservoir engineering.
 
 ## Performance envelope (measured on the dev workstation)

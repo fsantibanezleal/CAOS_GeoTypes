@@ -1,11 +1,11 @@
 import numpy as np
 
-from geotypes.assign import ConformalAssigner, nearest_medoid
-from geotypes.catalogue import Catalogue, build_catalogue
-from geotypes.cluster import pam_kmedoids
-from geotypes.distance import dtw_matrix
-from geotypes.preprocess import prepare_curves
-from geotypes.synthetic import warren_root_pd
+from pygeotypes.assign import ConformalAssigner, nearest_medoid
+from pygeotypes.catalogue import Catalogue, build_catalogue
+from pygeotypes.cluster import pam_kmedoids
+from pygeotypes.distance import dtw_matrix
+from pygeotypes.preprocess import prepare_curves
+from pygeotypes.synthetic import warren_root_pd
 
 WINDOW = 6
 N_POINTS = 48

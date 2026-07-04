@@ -2,7 +2,7 @@
 
 The core is a pure-numpy O(n·w) dynamic program (Pyodide-safe; fast enough for the live lane's
 one-curve-vs-K-medoids use). Full pairwise matrices over large offline ensembles can delegate to
-the C-accelerated `dtaidistance` package when installed (extra: `geotypes[fast]`).
+the C-accelerated `dtaidistance` package when installed (extra: `pygeotypes[fast]`).
 
 Conventions: local cost = squared difference; the returned distance is the square root of the
 accumulated cost along the optimal path (the same convention as dtaidistance / tslearn Euclidean

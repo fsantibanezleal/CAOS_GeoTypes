@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from geotypes.preprocess import (
+from pygeotypes.preprocess import (
     bourdet_derivative,
     log_resample,
     normalize,

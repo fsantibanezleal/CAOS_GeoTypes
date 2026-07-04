@@ -1,7 +1,7 @@
 name: Publish to PyPI
 
 # Fires on a GitHub Release (tag vX.XX.XXX). Uses PyPI Trusted Publishing (OIDC) — no stored token.
-# Requires the pending publisher registered on PyPI: project caos-geotypes, owner fsantibanezleal,
+# Requires the pending publisher registered on PyPI: project pygeotypes, owner fsantibanezleal,
 # repo CAOS_GeoTypes, workflow publish-pypi.yml, environment pypi.
 on:
   release:
