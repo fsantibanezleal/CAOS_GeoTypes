@@ -1,6 +1,6 @@
 # Theory — why each stage is what it is
 
-This is the scientific backbone of `geotypes`. Each section states the method, why it was chosen,
+This is the scientific backbone of `pygeotypes`. Each section states the method, why it was chosen,
 its assumptions and failure modes, with references. (Deep dossiers with the full literature trail
 live in the private management vault; this file is the self-contained repo summary.)
 

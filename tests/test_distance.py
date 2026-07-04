@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from geotypes.distance import distances_to_references, dtw_banded, dtw_matrix
+from pygeotypes.distance import distances_to_references, dtw_banded, dtw_matrix
 
 
 def test_identity_and_symmetry():

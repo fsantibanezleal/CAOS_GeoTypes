@@ -1,7 +1,7 @@
 import numpy as np
 
-from geotypes.preprocess import bourdet_derivative
-from geotypes.synthetic import (
+from pygeotypes.preprocess import bourdet_derivative
+from pygeotypes.synthetic import (
     generate_warren_root_ensemble,
     homogeneous_pd,
     stehfest_weights,

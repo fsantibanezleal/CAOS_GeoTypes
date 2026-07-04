@@ -1,4 +1,4 @@
-"""geotypes — shape catalogues of physical response signals.
+"""pygeotypes — shape catalogues of physical response signals.
 
 Build a catalogue of behaviour types (GeoTypes) from response signals whose *shape* reflects the
 underlying physical system (pressure transients, pumping tests, thermal response tests, ...), and
@@ -11,29 +11,29 @@ Pipeline (all pure numpy/scipy in the core, Pyodide-safe):
     cluster     -> PAM k-medoids on a precomputed distance matrix + silhouette / K-selection
     catalogue   -> the persistent GeoType catalogue artifact (JSON round-trip)
     assign      -> nearest-medoid + split-conformal assignment (p-values, prediction sets, OOD flag)
-    attribute   -> RF + SHAP + permutation importance (optional extra: geotypes[attr])
+    attribute   -> RF + SHAP + permutation importance (optional extra: pygeotypes[attr])
     synthetic   -> Warren-Root dual-porosity / homogeneous radial generators (Stehfest inversion)
 
 Display version follows the CAOS X.XX.XXX convention (see CHANGELOG.md).
 """
 
-from geotypes.catalogue import Catalogue, build_catalogue
-from geotypes.cluster import KMedoidsResult, pam_kmedoids, select_k, silhouette_from_distances
-from geotypes.distance import dtw_banded, dtw_matrix
-from geotypes.preprocess import (
+from pygeotypes.catalogue import Catalogue, build_catalogue
+from pygeotypes.cluster import KMedoidsResult, pam_kmedoids, select_k, silhouette_from_distances
+from pygeotypes.distance import dtw_banded, dtw_matrix
+from pygeotypes.preprocess import (
     bourdet_derivative,
     log_resample,
     normalize,
     second_log_derivative,
 )
-from geotypes.assign import ConformalAssigner, nearest_medoid
-from geotypes.synthetic import (
+from pygeotypes.assign import ConformalAssigner, nearest_medoid
+from pygeotypes.synthetic import (
     homogeneous_pd,
     warren_root_pd,
     generate_warren_root_ensemble,
 )
 
-__version__ = "0.1.1"          # PEP 440; display form 0.01.001 (CHANGELOG)
+__version__ = "0.1.2"          # PEP 440; display form 0.01.002 (CHANGELOG)
 __display_version__ = "0.01.000"
 
 __all__ = [

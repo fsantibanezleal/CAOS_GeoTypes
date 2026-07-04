@@ -14,7 +14,7 @@ from pathlib import Path
 
 import numpy as np
 
-from geotypes.cluster import KMedoidsResult, pam_kmedoids
+from pygeotypes.cluster import KMedoidsResult, pam_kmedoids
 
 __all__ = ["Catalogue", "build_catalogue"]
 

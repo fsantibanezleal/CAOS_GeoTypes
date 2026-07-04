@@ -1,10 +1,10 @@
 import numpy as np
 import pytest
 
-from geotypes.cluster import pam_kmedoids, select_k, silhouette_from_distances
-from geotypes.distance import dtw_matrix
-from geotypes.preprocess import prepare_curves
-from geotypes.synthetic import warren_root_pd
+from pygeotypes.cluster import pam_kmedoids, select_k, silhouette_from_distances
+from pygeotypes.distance import dtw_matrix
+from pygeotypes.preprocess import prepare_curves
+from pygeotypes.synthetic import warren_root_pd
 
 
 def _three_regime_ensemble(n_per: int = 8, seed: int = 0):

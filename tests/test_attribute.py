@@ -1,12 +1,12 @@
 import numpy as np
 import pytest
 
-from geotypes.attribute import prune_correlated
+from pygeotypes.attribute import prune_correlated
 
 sklearn = pytest.importorskip("sklearn")
 shap = pytest.importorskip("shap")
 
-from geotypes.attribute import attribute_geotypes  # noqa: E402
+from pygeotypes.attribute import attribute_geotypes  # noqa: E402
 
 
 def test_prune_correlated_drops_duplicates():
