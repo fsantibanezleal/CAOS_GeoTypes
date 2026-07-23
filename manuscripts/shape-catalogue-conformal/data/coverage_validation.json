@@ -1,0 +1,94 @@
+{
+  "meta": {
+    "n_points": 96,
+    "dtw_band": 10,
+    "K": 2,
+    "n_train": 160,
+    "n_cal": 320,
+    "n_test": 400,
+    "noise_sd": 0.0,
+    "silhouette_best_k": 2,
+    "class_counts_cal": {
+      "0": 152,
+      "1": 168
+    },
+    "note": "pygeotypes class-conditional split-conformal empirical coverage + OOD"
+  },
+  "coverage": [
+    {
+      "alpha": 0.05,
+      "target": 0.95,
+      "empirical_coverage": 0.96,
+      "mean_set_size": 0.99,
+      "per_class_coverage": {
+        "0": 0.97,
+        "1": 0.95
+      }
+    },
+    {
+      "alpha": 0.1,
+      "target": 0.9,
+      "empirical_coverage": 0.938,
+      "mean_set_size": 0.95,
+      "per_class_coverage": {
+        "0": 0.965,
+        "1": 0.911
+      }
+    },
+    {
+      "alpha": 0.15,
+      "target": 0.85,
+      "empirical_coverage": 0.885,
+      "mean_set_size": 0.89,
+      "per_class_coverage": {
+        "0": 0.955,
+        "1": 0.817
+      }
+    },
+    {
+      "alpha": 0.2,
+      "target": 0.8,
+      "empirical_coverage": 0.8,
+      "mean_set_size": 0.81,
+      "per_class_coverage": {
+        "0": 0.894,
+        "1": 0.708
+      }
+    },
+    {
+      "alpha": 0.3,
+      "target": 0.7,
+      "empirical_coverage": 0.738,
+      "mean_set_size": 0.74,
+      "per_class_coverage": {
+        "0": 0.798,
+        "1": 0.678
+      }
+    }
+  ],
+  "ood": {
+    "alien_shapes": 120,
+    "by_alpha": [
+      {
+        "alpha": 0.05,
+        "empty_set_rate": 1.0
+      },
+      {
+        "alpha": 0.1,
+        "empty_set_rate": 1.0
+      },
+      {
+        "alpha": 0.15,
+        "empty_set_rate": 1.0
+      },
+      {
+        "alpha": 0.2,
+        "empty_set_rate": 1.0
+      },
+      {
+        "alpha": 0.3,
+        "empty_set_rate": 1.0
+      }
+    ]
+  }
+}

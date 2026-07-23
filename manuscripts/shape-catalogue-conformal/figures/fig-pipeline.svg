@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="326" viewBox="0 0 740 326" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <marker id="ga" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#1a1a2e"/>
+    </marker>
+  </defs>
+
+  <text x="370" y="24" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a1a2e">pygeotypes: from response signals to a catalogue with guarantees</text>
+
+  <!-- stage boxes -->
+  <!-- 1 preprocess -->
+  <rect x="16" y="70" width="116" height="74" rx="8" fill="#eaf2f8" stroke="#1b6ca8" stroke-width="1.5"/>
+  <text x="74" y="90" text-anchor="middle" font-size="11" font-weight="bold" fill="#1b6ca8">preprocess</text>
+  <text x="74" y="107" text-anchor="middle" font-size="9.3" fill="#333">log-resample</text>
+  <text x="74" y="120" text-anchor="middle" font-size="9.3" fill="#333">Bourdet deriv.</text>
+  <text x="74" y="133" text-anchor="middle" font-size="9.3" fill="#333">normalize</text>
+
+  <!-- 2 distance -->
+  <rect x="164" y="70" width="116" height="74" rx="8" fill="#eaf2f8" stroke="#1b6ca8" stroke-width="1.5"/>
+  <text x="222" y="90" text-anchor="middle" font-size="11" font-weight="bold" fill="#1b6ca8">distance</text>
+  <text x="222" y="107" text-anchor="middle" font-size="9.3" fill="#333">Sakoe-Chiba</text>
+  <text x="222" y="120" text-anchor="middle" font-size="9.3" fill="#333">banded DTW</text>
+  <text x="222" y="133" text-anchor="middle" font-size="9.3" fill="#333">(numpy DP)</text>
+
+  <!-- 3 cluster -->
+  <rect x="312" y="70" width="116" height="74" rx="8" fill="#eaf2f8" stroke="#1b6ca8" stroke-width="1.5"/>
+  <text x="370" y="90" text-anchor="middle" font-size="11" font-weight="bold" fill="#1b6ca8">cluster</text>
+  <text x="370" y="107" text-anchor="middle" font-size="9.3" fill="#333">PAM k-medoids</text>
+  <text x="370" y="120" text-anchor="middle" font-size="9.3" fill="#333">silhouette K</text>
+  <text x="370" y="133" text-anchor="middle" font-size="9.3" fill="#333">(seeded)</text>
+
+  <!-- 4 catalogue -->
+  <rect x="460" y="70" width="116" height="74" rx="8" fill="#eaf2f8" stroke="#1b6ca8" stroke-width="1.5"/>
+  <text x="518" y="90" text-anchor="middle" font-size="11" font-weight="bold" fill="#1b6ca8">Catalogue</text>
+  <text x="518" y="107" text-anchor="middle" font-size="9.3" fill="#333">medoid curves</text>
+  <text x="518" y="120" text-anchor="middle" font-size="9.3" fill="#333">+ labels + prov.</text>
+  <text x="518" y="133" text-anchor="middle" font-size="9.3" fill="#333">exact JSON</text>
+
+  <!-- 5 conformal assign (NOVEL) -->
+  <rect x="608" y="70" width="118" height="74" rx="8" fill="#fdf1e8" stroke="#e07a3f" stroke-width="2"/>
+  <text x="667" y="88" text-anchor="middle" font-size="11" font-weight="bold" fill="#c15a22">conformal</text>
+  <text x="667" y="101" text-anchor="middle" font-size="11" font-weight="bold" fill="#c15a22">assign</text>
+  <text x="667" y="117" text-anchor="middle" font-size="9.3" fill="#333">p-values / set</text>
+  <text x="667" y="130" text-anchor="middle" font-size="9.3" fill="#333">OOD flag</text>
+
+  <!-- arrows -->
+  <line x1="132" y1="107" x2="162" y2="107" stroke="#1a1a2e" stroke-width="1.4" marker-end="url(#ga)"/>
+  <line x1="280" y1="107" x2="310" y2="107" stroke="#1a1a2e" stroke-width="1.4" marker-end="url(#ga)"/>
+  <line x1="428" y1="107" x2="458" y2="107" stroke="#1a1a2e" stroke-width="1.4" marker-end="url(#ga)"/>
+  <line x1="576" y1="107" x2="606" y2="107" stroke="#1a1a2e" stroke-width="1.4" marker-end="url(#ga)"/>
+
+  <!-- raw input -->
+  <text x="74" y="58" text-anchor="middle" font-size="9.5" font-style="italic" fill="#666">raw (t, p)</text>
+
+  <!-- brackets: methodology vs novel -->
+  <path d="M16 162 L16 170 L576 170 L576 162" fill="none" stroke="#1b6ca8" stroke-width="1.2"/>
+  <text x="296" y="186" text-anchor="middle" font-size="10" fill="#1b6ca8">reusable, Pyodide-safe implementation of the GeoTypes methodology (Kamel Targhi et al. 2026)</text>
+  <path d="M608 162 L608 170 L726 170 L726 162" fill="none" stroke="#e07a3f" stroke-width="1.2"/>
+  <text x="667" y="186" text-anchor="middle" font-size="10" fill="#c15a22">novel layer</text>
+
+  <!-- conformal detail band -->
+  <rect x="16" y="206" width="710" height="86" rx="8" fill="#fbf7f4" stroke="#e0c9b8" stroke-width="1"/>
+  <text x="28" y="226" font-size="10.5" font-weight="bold" fill="#c15a22">class-conditional split-conformal:</text>
+  <text x="28" y="246" font-size="10.2" fill="#333">p_g(x) = ( #{ s in S_g : s &#8805; d(x, medoid_g) } + 1 ) / ( |S_g| + 1 ),   with nonconformity score d = DTW distance to medoid g.</text>
+  <text x="28" y="266" font-size="10.2" fill="#333">prediction set = { g : p_g &gt; &#945; } covers the true GeoType with probability &#8805; 1 &#8722; &#945; per class (Vovk et al. 2005; Angelopoulos &amp; Bates 2023).</text>
+  <text x="28" y="285" font-size="10.2" font-style="italic" fill="#444">An empty set is an honest out-of-catalogue flag: the shape matches no behaviour class at confidence 1 &#8722; &#945;.</text>
+</svg>

@@ -3,6 +3,14 @@
 [![CI](https://img.shields.io/github/actions/workflow/status/fsantibanezleal/CAOS_GeoTypes/ci.yml?branch=main&label=CI)](https://github.com/fsantibanezleal/CAOS_GeoTypes/actions)
 [![License](https://img.shields.io/github/license/fsantibanezleal/CAOS_GeoTypes)](LICENSE)
 [![Version](https://img.shields.io/github/v/tag/fsantibanezleal/CAOS_GeoTypes?label=version&sort=semver)](https://github.com/fsantibanezleal/CAOS_GeoTypes/tags)
+[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.21511918-blue)](https://doi.org/10.5281/zenodo.21511918)
+
+Software note (CC-BY-4.0): *"pygeotypes: A Dependency-Light Shape-Catalogue Library with Class-Conditional
+Conformal Assignment for Physical Response Signals"*, concept DOI
+[10.5281/zenodo.21511918](https://doi.org/10.5281/zenodo.21511918) (source in
+[`manuscripts/shape-catalogue-conformal/`](manuscripts/shape-catalogue-conformal/)). It describes the reusable
+library and validates the conformal layer (empirical coverage tracks the target; alien shapes flagged
+out-of-catalogue). The GeoTypes clustering methodology is the work of Kamel Targhi et al. (2026), cited throughout.
 
 `pygeotypes` builds a **catalogue of behaviour types** from response signals whose *shape* reflects
 the underlying physical system — pressure transients of fractured reservoirs, hydrogeology pumping
