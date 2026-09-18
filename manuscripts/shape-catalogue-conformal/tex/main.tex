@@ -28,6 +28,42 @@
 
 \newcommand{\gt}{\textsc{GeoType}}
 
+% IEEEtran hard-codes an em-dash after the abstract and index-terms names; the CAOS
+% content standard (ADR-0067) excludes em-dashes, so the separator is a full stop.
+\makeatletter
+\def\abstract{\normalfont
+    \if@twocolumn
+      \@IEEEabskeysecsize\bfseries\textit{\abstractname}.\ \relax
+    \else
+      \bgroup\par\addvspace{0.5\baselineskip}\centering\vspace{-1.78ex}\@IEEEabskeysecsize\textbf{\abstractname}\par\addvspace{0.5\baselineskip}\egroup\quotation\@IEEEabskeysecsize
+    \fi\@IEEEgobbleleadPARNLSP}
+\def\IEEEkeywords{\normalfont
+    \if@twocolumn
+      \@IEEEabskeysecsize\bfseries\textit{\IEEEkeywordsname}.\ \relax
+    \else
+      \bgroup\par\addvspace{0.5\baselineskip}\centering\@IEEEabskeysecsize\textbf{\IEEEkeywordsname}\par\addvspace{0.5\baselineskip}\egroup\quotation\@IEEEabskeysecsize
+    \fi\@IEEEgobbleleadPARNLSP}
+\makeatother
+
+% Page-1 header block (conventions/manuscript-header-standard.md). The four document
+% macros are set by the publishing tool when the version DOI is reserved.
+\newcommand{\doctype}{Technical note}
+\newcommand{\docversion}{v1.1}
+\newcommand{\docdate}{18 September 2026}
+\newcommand{\versiondoi}{10.5281/zenodo.22822555}
+\newcommand{\conceptdoi}{10.5281/zenodo.21511918}
+\newcommand{\docrepo}{github.com/fsantibanezleal/CAOS\_GeoTypes}
+\newcommand{\headerblock}{%
+\begin{center}
+\fbox{\parbox{0.94\textwidth}{\small\raggedright
+\textbf{\doctype} \quad$\cdot$\quad \docversion, \docdate \quad$\cdot$\quad Licence CC BY 4.0\\[2pt]
+CAOS open-research programme \quad$\cdot$\quad CAOS\_GeoTypes, the \texttt{pygeotypes} shape-catalogue package\\[2pt]
+Version DOI \href{https://doi.org/\versiondoi}{\texttt{\versiondoi}} \quad$\cdot$\quad
+concept DOI (always latest) \href{https://doi.org/\conceptdoi}{\texttt{\conceptdoi}}\\[2pt]
+Not peer reviewed. Source code, data and computational records: \href{https://\docrepo}{\texttt{\docrepo}}
+}}
+\end{center}}
+
 \begin{document}
 
 \title{pygeotypes: A Dependency-Light Shape-Catalogue\\ Library with Class-Conditional Conformal\\ Assignment for Physical Response Signals}
@@ -35,13 +71,15 @@
 \author{Felipe~Santiba\~nez-Leal~\orcidlink{0000-0002-0150-3246}%
 \thanks{F. Santiba\~nez-Leal is with the CAOS open-research programme, Santiago, Chile
 (e-mail: fsantibanez@gmail.com; ORCID 0000-0002-0150-3246).}%
-\thanks{Software note, 2026. Package \texttt{pygeotypes} on PyPI (\url{https://pypi.org/project/pygeotypes});
-source (MIT) at \url{https://github.com/fsantibanezleal/CAOS_GeoTypes}. This note describes a reusable software
+\thanks{The package \texttt{pygeotypes} is available on PyPI (\url{https://pypi.org/project/pygeotypes});
+source code (MIT) at \url{https://github.com/fsantibanezleal/CAOS_GeoTypes}. This note describes a reusable software
 implementation of the \gt{} methodology of Kamel Targhi \emph{et al.} (2026) and adds a conformal assignment
 layer; the methodology itself is their contribution, cited throughout.}}
 
-\markboth{Software Note, 2026}%
+\markboth{\doctype\ \docversion, 2026 \textperiodcentered\ CAOS open-research programme}%
 {Santiba\~nez-Leal: pygeotypes, a shape-catalogue library with conformal type assignment}
+
+\IEEEaftertitletext{\vspace{-0.6\baselineskip}\headerblock\vspace{0.2\baselineskip}}
 
 \maketitle
 
@@ -59,12 +97,13 @@ unchanged offline and in the browser (Pyodide), that packages the full \gt{} pip
 derivative, band-constrained dynamic time warping, PAM k-medoids with silhouette model selection, an exact-JSON
 catalogue artifact) and adds a \emph{class-conditional split-conformal assignment layer}. The conformal layer
 returns, for a new signal, a per-type $p$-value and the prediction set of behaviour types consistent with it at a
-requested confidence, and an empty set is an honest out-of-catalogue flag. On a reproducible pressure-transient
-benchmark the empirical coverage tracks or exceeds the nominal $1-\alpha$ target across the operating range
-(0.960 at $\alpha{=}0.05$, 0.938 at $0.10$, 0.885 at $0.15$, 0.800 at $0.20$), the prediction sets stay
+requested confidence, and an empty set flags the signal as out of catalogue. On a reproducible pressure-transient
+benchmark the marginal empirical coverage tracks or exceeds the nominal $1-\alpha$ target across the operating
+range (0.960 at $\alpha{=}0.05$, 0.938 at $0.10$, 0.885 at $0.15$, 0.800 at $0.20$); per class, one of the two
+behaviours stays covered at every level while the other falls below target for $\alpha \ge 0.15$. The prediction sets stay
 informative (mean size $1.0$ down to $0.7$), and every alien shape tested is flagged out-of-catalogue at all
-confidence levels. We describe the library, the conformal construction, and the validation; every number and
-figure regenerates from the committed artifacts.
+confidence levels. These results come from a single seeded run and regenerate exactly from the archived script
+and artifacts.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -85,7 +124,7 @@ methodology is theirs; this note is about making it \emph{reusable} and \emph{de
 
 Two gaps stand in the way. The first is deployment. The shape comparison wants dynamic time
 warping~\cite{sakoe} and the clustering wants PAM k-medoids~\cite{kaufman} with silhouette model
-selection~\cite{rousseeuw}, but in mid-2026 the convenient implementations are hard to ship: scikit-learn-extra
+selection~\cite{rousseeuw}, but in mid-2026 the convenient implementations are hard to distribute: scikit-learn-extra
 (k-medoids) is unmaintained, the fast Rust \texttt{kmedoids} is GPL-3 (a licensing constraint for a permissive
 library), and tslearn and aeon pull in Numba or native code that does not run in a Pyodide browser sandbox. A
 characterisation tool that a practitioner can run from a notebook, or that a static web application can run
@@ -98,11 +137,10 @@ characterisation workflow must surface.
 browser; the accelerated and attribution features are optional extras. It packages the whole \gt{} pipeline
 behind a small API with an exact-round-trip JSON catalogue artifact, and, as the one methodological addition of
 this note, it wraps assignment in a \emph{class-conditional split-conformal} layer that turns the catalogue into a
-decision tool with finite-sample, per-class coverage guarantees~\cite{vovk,angelopoulos} and an honest
-out-of-catalogue flag. The contributions of this software note are therefore: (i) a reusable, browser-ready
-implementation of the \gt{} methodology; and (ii) the conformal assignment layer, validated empirically. We are
-explicit that the underlying shape-catalogue methodology is the contribution of Kamel Targhi \emph{et
-al.}~\cite{geotypes}, cited wherever it is used.
+decision tool with finite-sample, per-class coverage guarantees~\cite{vovk,angelopoulos} and an
+out-of-catalogue flag. This note therefore contributes (i) a reusable, browser-ready implementation of the \gt{}
+methodology; and (ii) the conformal assignment layer, validated empirically. The underlying shape-catalogue
+methodology is the contribution of Kamel Targhi \emph{et al.}~\cite{geotypes}, cited wherever it is used.
 
 \section{Statement of Need}\label{sec:need}
 
@@ -110,10 +148,10 @@ The users are practitioners and researchers who characterise systems from respon
 \gt{} methodology to be (a) installable and portable and (b) usable as a decision tool. A reservoir or
 hydrogeology analyst wants to drop a new pressure or drawdown curve against an established catalogue and be told,
 with a confidence level, which behaviour types are consistent with it, or that none are. A static web application
-built for such a workflow must run the assignment client-side, which rules out native dependencies. And any
-honest characterisation must be able to say ``out of catalogue'' rather than silently snapping an unusual signal
+built for such a workflow must run the assignment client-side, which rules out native dependencies. And a
+characterisation must be able to say ``out of catalogue'' rather than silently snapping an unusual signal
 to the nearest prototype. No single existing package covers this combination: the maintained clustering stacks
-are either unshippable under a permissive license or non-portable to the browser, and none attaches a
+are either incompatible with a permissive license or non-portable to the browser, and none attaches a
 distribution-free guarantee to catalogue assignment. \texttt{pygeotypes} is built to fill exactly that
 combination, with the methodology of~\cite{geotypes} as its scientific basis.
 
@@ -126,7 +164,7 @@ combination, with the methodology of~\cite{geotypes} as its scientific basis.
 the \gt{} methodology of Kamel Targhi \emph{et al.}~\cite{geotypes}: preprocess (log-resample, Bourdet
 derivative, normalize), band-constrained DTW distance, PAM k-medoids with silhouette model selection, and an
 exact-JSON \texttt{Catalogue} artifact. The final stage is the one methodological addition of this note: a
-class-conditional split-conformal assigner that returns per-type $p$-values, a prediction set, and an honest
+class-conditional split-conformal assigner that returns per-type $p$-values, a prediction set, and an
 out-of-catalogue flag.}
 \label{fig:pipeline}
 \end{figure*}
@@ -161,7 +199,7 @@ cross-checked by TreeSHAP~\cite{shap} and permutation importance, but it is outs
 
 The methodological addition is the assignment layer. Nearest-medoid assignment returns $\arg\min_g
 d(x,\text{medoid}_g)$ for a new curve $x$, always a type and never a caveat. Split-conformal
-prediction~\cite{vovk,angelopoulos} turns this into a guaranteed decision. Fit on a \emph{calibration} set of
+prediction~\cite{vovk,angelopoulos} turns this into a decision with a coverage guarantee. Fit on a \emph{calibration} set of
 labelled curves disjoint from those used to build the catalogue. For each type $g$ the calibration scores are the
 DTW distances of the class-$g$ calibration curves to medoid $g$, $S_g=\{\,d(x_i,\text{medoid}_g): y_i=g\,\}$
 (the nonconformity score is the same DTW distance the catalogue is built on, so the layer stays pure NumPy and
@@ -182,26 +220,27 @@ set with probability at least $1-\alpha$ \emph{within each class},
 \end{equation}
 Class-conditional validity matters because \gt{} populations are imbalanced in real ensembles
 (Fig.~\ref{fig:catalogue}), and a merely marginal guarantee could under-cover a minority behaviour. Two outputs
-follow naturally. A \emph{prediction set} larger than one signals genuine ambiguity between behaviours at the
-requested confidence; a singleton is a confident call. An \emph{empty set} is an honest out-of-catalogue flag:
+follow naturally. A \emph{prediction set} larger than one signals ambiguity between behaviours at the
+requested confidence; a singleton is a confident call. An \emph{empty set} is an out-of-catalogue flag:
 the curve's shape is consistent with no catalogued behaviour at confidence $1-\alpha$, exactly the case a
 characterisation workflow must surface instead of forcing the nearest medoid. The calibration scores are small
 sorted arrays baked into the catalogue artifact, so the browser recomputes $p$-values and sets live.
 
 \section{Empirical Validation}\label{sec:validation}
 
-\begin{figure}[!t]
+\begin{figure*}[!t]
 \centering
-\includegraphics[width=0.99\columnwidth]{fig-coverage.pdf}
+\includegraphics[width=0.78\textwidth]{fig-coverage.pdf}
 \caption{Reproducible validation of the conformal layer on a Warren-Root pressure-transient benchmark ($K{=}2$
 catalogue; $320$ calibration, $400$ test curves). \textbf{(a)} Empirical marginal coverage against the nominal
-$1-\alpha$ target, both marginally (bold) and per class: coverage sits on or above the diagonal across the
-operating range ($0.960, 0.938, 0.885, 0.800$ at $\alpha=0.05,0.10,0.15,0.20$), and the class-conditional
-calibration keeps both the majority and the minority behaviour covered. \textbf{(b)} The prediction sets stay
+$1-\alpha$ target, marginally (bold) and per class: the marginal coverage sits on or above the diagonal across
+the operating range ($0.960, 0.938, 0.885, 0.800$ at $\alpha=0.05,0.10,0.15,0.20$); per class, \gt{}~0 stays on
+or above target at every level, whereas \gt{}~1 falls below it for $\alpha \ge 0.15$ ($0.817$, $0.708$, $0.678$
+against $0.85$, $0.80$, $0.70$). \textbf{(b)} The prediction sets stay
 informative (mean size $0.99$ down to $0.74$), and every alien high-frequency shape is flagged out-of-catalogue
 at all tested confidence levels.}
 \label{fig:coverage}
-\end{figure}
+\end{figure*}
 
 We validate the conformal layer with a reproducible experiment (Fig.~\ref{fig:coverage}) on synthetic
 pressure transients so the ground truth is controlled. An ensemble of Warren-Root dual-porosity
@@ -210,40 +249,51 @@ wide parameter span, giving two well-separated behaviour modes) is preprocessed,
 training (catalogue), calibration ($320$ curves) and test ($400$ curves) sets. The ground-truth type of a test
 curve is its nearest medoid under the same DTW metric, the self-consistent label for an unsupervised catalogue.
 
-Three results follow. First, \emph{the coverage guarantee holds empirically}: across the operating range the
+Three results follow. First, \emph{the marginal coverage holds empirically}: across the operating range the
 measured marginal coverage tracks or exceeds the nominal target at every level ($0.960$ vs $0.95$; $0.938$ vs
-$0.90$; $0.885$ vs $0.85$; $0.800$ vs $0.80$; $0.738$ vs $0.70$), and the per-class coverages confirm it holds
-for both the majority (\gt{}~0) and the minority (\gt{}~1) behaviour, the property the class-conditional
-calibration is there to protect. Second, \emph{the sets are informative}: mean prediction-set size falls from
+$0.90$; $0.885$ vs $0.85$; $0.800$ vs $0.80$; $0.738$ vs $0.70$). Per class the picture is split. The smaller
+behaviour (\gt{}~0, $152$ of the $320$ calibration curves) is covered at or above target at every level
+($0.970$, $0.965$, $0.955$, $0.894$, $0.798$), while \gt{}~1 ($168$ calibration curves) is covered at
+$\alpha \le 0.10$ ($0.950$, $0.911$) but falls below target at $\alpha = 0.15$, $0.20$ and $0.30$ ($0.817$,
+$0.708$, $0.678$). In this run the class-conditional calibration therefore protects the smaller behaviour, but
+the per-class guarantee is not confirmed for \gt{}~1 at the lower confidence levels. Second, \emph{the sets are informative}: mean prediction-set size falls from
 $0.99$ at $\alpha{=}0.05$ to $0.74$ at $\alpha{=}0.30$, so at operating confidence the layer typically returns a
 single confident type, not the whole catalogue. Third, \emph{out-of-catalogue detection works}: every shape alien
 to the catalogue (high-frequency oscillations, unlike any pressure transient) is flagged out-of-catalogue at all
-tested confidence levels ($\alpha$ from $0.05$ to $0.30$), correctly refusing to force an alien signal onto the
-nearest medoid. The experiment is a single, seeded run; the numbers regenerate exactly from the committed script and
-artifact.
+tested confidence levels ($\alpha$ from $0.05$ to $0.30$), rather than being forced onto the nearest medoid. The
+experiment is a single, seeded run; the numbers regenerate exactly from the archived script and artifact.
 
 \section{Architecture and Availability}\label{sec:arch}
 
-The library is five small pure-NumPy/SciPy modules (\texttt{preprocess}, \texttt{distance}, \texttt{cluster},
-\texttt{catalogue}, \texttt{assign}) plus the optional \texttt{attribute} module. Install lanes keep the core
-light:
+{\raggedright\parindent=1em
+The library consists of five small pure-NumPy/SciPy modules (\texttt{preprocess}, \texttt{distance},
+\texttt{cluster}, \texttt{catalogue}, \texttt{assign}) plus the optional \texttt{attribute} module. Install lanes
+keep the core light:\par}
 
 \begin{lstlisting}[language=bash]
-pip install pygeotypes          # pure core (numpy + scipy)
-pip install pygeotypes[fast]    # + dtaidistance (fast offline DTW)
-pip install pygeotypes[attr]    # + scikit-learn + shap (drivers)
+# pure core (numpy + scipy)
+pip install pygeotypes
+# + dtaidistance (fast offline DTW)
+pip install pygeotypes[fast]
+# + scikit-learn + shap (drivers)
+pip install pygeotypes[attr]
 \end{lstlisting}
 
 A catalogue is built and a new curve assigned in a few calls:
 
 \begin{lstlisting}[language=Python]
-from pygeotypes import (dtw_matrix, select_k, pam_kmedoids,
-    build_catalogue, ConformalAssigner)
-D   = dtw_matrix(X, window=10)          # banded DTW
-res = pam_kmedoids(D, k=select_k(D, range(2,9))["best_k"], seed=0)
-cat = build_catalogue(X, t_grid, D, k=res.k, dtw_window=10, result=res)
-asg = ConformalAssigner(cat).fit(X_cal, labels_cal)
-out = asg.predict(new_curve, alpha=0.1)  # .prediction_set, .out_of_catalogue
+from pygeotypes import (dtw_matrix, select_k,
+    pam_kmedoids, build_catalogue,
+    ConformalAssigner)
+D   = dtw_matrix(X, window=10)      # banded DTW
+res = pam_kmedoids(D,
+    k=select_k(D, range(2,9))["best_k"], seed=0)
+cat = build_catalogue(X, t_grid, D, k=res.k,
+    dtw_window=10, result=res)
+asg = ConformalAssigner(cat).fit(X_cal,
+    labels_cal)
+out = asg.predict(new_curve, alpha=0.1)
+# out.prediction_set, out.out_of_catalogue
 \end{lstlisting}
 
 The core carries no native dependency, so the same code runs offline and in a Pyodide browser lane; the DTW
@@ -251,42 +301,46 @@ matrix has an optional compiled backend that is parity-tested against the NumPy 
 conformal calibration serialise to JSON with an exact round-trip, so an offline-baked catalogue is replayed
 client-side. The package is seeded and deterministic, unit-tested (preprocessing, DTW parity, PAM, catalogue
 round-trip, the conformal coverage-and-OOD test), and published to PyPI as \texttt{pygeotypes} under the MIT
-license. Source and the reproducible validation of this note are at
+license. Source code and the reproducible validation are available at
 \url{https://github.com/fsantibanezleal/CAOS_GeoTypes}.
 
 \section{Limitations}\label{sec:limits}
 
-The scope is honest. The shape-catalogue methodology is that of Kamel Targhi \emph{et al.}~\cite{geotypes}; this
+The shape-catalogue methodology is that of Kamel Targhi \emph{et al.}~\cite{geotypes}; this
 note contributes the reusable implementation and the conformal layer, not the clustering method. The conformal
 guarantee is finite-sample and class-conditional but rests on exchangeability of calibration and test curves; a
 covariate shift between the ensemble a catalogue was built on and the signals it is later applied to would weaken
 it, and class-conditional calibration needs enough curves per type ($n_g \gtrsim 1/\alpha - 1$ for an empty set
 to be reachable at level $\alpha$). The validation here is on synthetic dual-porosity transients where ground
 truth is controlled; on field data the ground-truth type is itself uncertain, and the coverage statement is then
-relative to the catalogue's own metric. The out-of-catalogue flag detects shapes far from every medoid under DTW,
-not every kind of anomaly. None of these is hidden: the package's validation document and tests state what is and
-is not guaranteed.
+relative to the catalogue's own metric. In the validation run the per-class coverage of \gt{}~1 falls below
+target for $\alpha \ge 0.15$; a single seeded run cannot separate finite-sample fluctuation from a systematic
+departure from exchangeability, so the class-conditional guarantee is established here in theory and confirmed
+empirically for \gt{}~0 at every level and for \gt{}~1 only at $\alpha \le 0.10$. The out-of-catalogue flag
+detects shapes far from every medoid under DTW, not every kind of anomaly. The package's validation document and tests state what is and is not guaranteed.
 
 \section{Conclusion}
 
 \texttt{pygeotypes} makes the \gt{} shape-catalogue methodology of Kamel Targhi \emph{et al.} reusable and
 decision-ready: a dependency-light, browser-safe implementation of the full pipeline, plus a class-conditional
-split-conformal assignment layer that turns catalogue lookup into a guaranteed decision with an honest
-out-of-catalogue flag. On a reproducible benchmark the coverage guarantee holds across the operating range, the
-prediction sets stay informative, and alien shapes are flagged. The value is a portable, honestly-validated tool
-for characterising physical systems by the shape of their response, with the statistical humility to say when a
-signal does not fit.
+split-conformal assignment layer that turns catalogue lookup into a decision with a finite-sample coverage
+guarantee and an out-of-catalogue flag. On a reproducible benchmark the marginal coverage holds across the
+operating range (per class it holds for \gt{}~0 throughout and for \gt{}~1 at $\alpha \le 0.10$), the
+prediction sets stay informative, and alien shapes are flagged. The result is a portable, empirically validated
+tool for characterising physical systems by the shape of their response, which reports when a signal does not
+fit the catalogue.
 
 \appendices
 \section{Reproduction}\label{app:repro}
 
-The validation is \texttt{manuscripts/shape-catalogue-conformal/figures/coverage\_validation.py}: it builds the
+{\raggedright\parindent=1em
+The validation is \path{manuscripts/shape-catalogue-conformal/figures/coverage_validation.py}: it builds the
 catalogue from a seeded Warren-Root ensemble, fits the \texttt{ConformalAssigner} on the calibration split,
 measures marginal and per-class coverage and mean set size across $\alpha\in\{0.05,0.10,0.15,0.20,0.30\}$ on the
 test split, sweeps the out-of-catalogue empty-set rate over the same grid, and writes
-\texttt{data/coverage\_validation.json} and the medoid curves. The figure script reads those artifacts; the
+\path{data/coverage_validation.json} and the medoid curves. The figure script reads those artifacts; the
 pipeline schematic is a hand-authored theme-aware drawing. Re-running reproduces every number in
-Section~\ref{sec:validation} and Figs.~\ref{fig:catalogue}--\ref{fig:coverage} (the run is seeded).
+Section~\ref{sec:validation} and Figs.~\ref{fig:catalogue}--\ref{fig:coverage} (the run is seeded).\par}
 
 \balance
 

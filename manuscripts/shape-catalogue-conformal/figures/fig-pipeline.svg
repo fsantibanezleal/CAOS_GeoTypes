@@ -63,5 +63,5 @@
   <text x="28" y="226" font-size="10.5" font-weight="bold" fill="#c15a22">class-conditional split-conformal:</text>
   <text x="28" y="246" font-size="10.2" fill="#333">p_g(x) = ( #{ s in S_g : s &#8805; d(x, medoid_g) } + 1 ) / ( |S_g| + 1 ),   with nonconformity score d = DTW distance to medoid g.</text>
   <text x="28" y="266" font-size="10.2" fill="#333">prediction set = { g : p_g &gt; &#945; } covers the true GeoType with probability &#8805; 1 &#8722; &#945; per class (Vovk et al. 2005; Angelopoulos &amp; Bates 2023).</text>
-  <text x="28" y="285" font-size="10.2" font-style="italic" fill="#444">An empty set is an honest out-of-catalogue flag: the shape matches no behaviour class at confidence 1 &#8722; &#945;.</text>
+  <text x="28" y="285" font-size="10.2" font-style="italic" fill="#444">An empty set is an out-of-catalogue flag: the shape matches no behaviour class at confidence 1 &#8722; &#945;.</text>
 </svg>
