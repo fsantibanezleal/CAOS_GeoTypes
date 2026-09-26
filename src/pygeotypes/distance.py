@@ -92,7 +92,7 @@ def distances_to_references(x: np.ndarray, refs: np.ndarray, window: int | None 
     """DTW distance from one curve to each reference curve (rows of `refs`).
 
     This is the live-lane primitive: classify-my-curve computes K distances (K = number of
-    medoids), never a full matrix — cheap enough for the browser.
+    medoids), never a full matrix, cheap enough for the browser.
     """
     x = np.asarray(x, dtype=float)
     refs = np.asarray(refs, dtype=float)

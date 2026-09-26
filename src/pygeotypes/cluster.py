@@ -1,11 +1,11 @@
 """PAM k-medoids clustering on a precomputed distance matrix, plus K-selection diagnostics.
 
-Why in-house: as of mid-2026 there is no maintained, permissively-licensed, Pyodide-friendly PAM —
+Why in-house: as of mid-2026 there is no maintained, permissively-licensed, Pyodide-friendly PAM, 
 scikit-learn-extra is unmaintained (last release 2023), the fast Rust `kmedoids` package is GPL-3,
 and aeon/tslearn drag numba/native deps. PAM on a precomputed matrix is ~100 lines of numpy; for
 ensemble sizes up to a few thousand curves the O(k(n-k)²) SWAP step is fine offline.
 
-Algorithm: classic PAM (Kaufman & Rousseeuw 1990) — greedy BUILD initialization, then SWAP until
+Algorithm: classic PAM (Kaufman & Rousseeuw 1990), greedy BUILD initialization, then SWAP until
 no single medoid↔non-medoid exchange lowers total cost. Multi-restart keeps the best of `n_init`
 runs (BUILD is deterministic; restarts randomize via sampled initial medoid sets), all seeded.
 """

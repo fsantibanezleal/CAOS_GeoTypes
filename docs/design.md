@@ -1,11 +1,11 @@
-# Design — package shape, licensing rationale, lanes, stability
+# Design: package shape, licensing rationale, lanes, stability
 
 ## Design goals (in priority order)
 
-1. **Pure-numpy core** — every guarantee-carrying path (preprocess → distance → assign) must run in
+1. **Pure-numpy core**: every guarantee-carrying path (preprocess → distance → assign) must run in
    Pyodide unchanged, so a browser app can classify a user's curve live against a baked catalogue.
-2. **Determinism** — seeded everything; a catalogue is a pure function of (curves, params, seed).
-3. **Honesty primitives built-in** — OOD flag, attribution accuracy gate, ranking cross-checks and
+2. **Determinism**: seeded everything; a catalogue is a pure function of (curves, params, seed).
+3. **Honesty primitives built-in**: OOD flag, attribution accuracy gate, ranking cross-checks and
    finite-sample caveats are part of the API, not left to the caller's discipline.
 4. **Permissive license** (Apache-2.0) with no copyleft in the dependency core.
 
@@ -14,10 +14,10 @@
 | Candidate | Problem (as of 2026-07) |
 |---|---|
 | scikit-learn-extra `KMedoids` | unmaintained since 2023; sklearn-version friction |
-| `kmedoids` (Rust FasterPAM) | GPL-3 — viral for a permissive library |
+| `kmedoids` (Rust FasterPAM) | GPL-3, viral for a permissive library |
 | tslearn | BSD but numba/joblib heavy; no Pyodide; DTW k-means focus |
 | aeon / sktime | numba required; heavy; no Pyodide |
-| dtaidistance | Apache-2 ✔ — used, but only as an **optional offline backend** (C ext, no Pyodide) |
+| dtaidistance | Apache-2 ✔, used, but only as an **optional offline backend** (C ext, no Pyodide) |
 
 PAM on a precomputed matrix is small enough to own (~130 lines incl. diagnostics) and unlocks the
 browser lane; `dtaidistance` accelerates the offline O(n²) matrix when installed, with CI parity

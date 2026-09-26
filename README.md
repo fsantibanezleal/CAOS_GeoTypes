@@ -1,4 +1,4 @@
-# pygeotypes — shape catalogues of physical response signals
+# pygeotypes: shape catalogues of physical response signals
 
 [![CI](https://img.shields.io/github/actions/workflow/status/fsantibanezleal/CAOS_GeoTypes/ci.yml?branch=main&label=CI)](https://github.com/fsantibanezleal/CAOS_GeoTypes/actions)
 [![License](https://img.shields.io/github/license/fsantibanezleal/CAOS_GeoTypes)](LICENSE)
@@ -13,21 +13,21 @@ library and validates the conformal layer (empirical coverage tracks the target;
 out-of-catalogue). The GeoTypes clustering methodology is the work of Kamel Targhi et al. (2026), cited throughout.
 
 `pygeotypes` builds a **catalogue of behaviour types** from response signals whose *shape* reflects
-the underlying physical system — pressure transients of fractured reservoirs, hydrogeology pumping
-tests, thermal response tests — and assigns new signals to that catalogue **with statistical
+the underlying physical system, pressure transients of fractured reservoirs, hydrogeology pumping
+tests, thermal response tests, and assigns new signals to that catalogue **with statistical
 guarantees**. It packages the methodology of Kamel Targhi et al. (2026, Computational Geosciences,
 DOI [10.1007/s10596-026-10459-w](https://doi.org/10.1007/s10596-026-10459-w)) as a reusable,
 permissively-licensed library, and adds a conformal-prediction assignment layer on top.
 
-> **Naming.** `pip install pygeotypes` · `import pygeotypes` — distribution and import match.
+> **Naming.** `pip install pygeotypes` · `import pygeotypes`, distribution and import match.
 > The bare name `geotypes` is taken on PyPI by an unrelated geospatial-utilities package; this
 > library is unrelated to it and shares no module names with it. "GeoTypes" itself is the term of
 > the methodology paper (the catalogue of flow-behaviour types).
 
 **Why this package exists** (mid-2026 gap): scikit-learn-extra (k-medoids) is unmaintained, the
 fast Rust `kmedoids` is GPL-3, tslearn/aeon drag numba/native dependencies that do not run in
-Pyodide. The `pygeotypes` **core is pure numpy/scipy** — it runs unchanged offline and in the
-browser (Pyodide) — with optional accelerated/attribution extras.
+Pyodide. The `pygeotypes` **core is pure numpy/scipy**, it runs unchanged offline and in the
+browser (Pyodide), with optional accelerated/attribution extras.
 
 ## The pipeline
 
@@ -83,7 +83,7 @@ res = pam_kmedoids(D, k=diag["best_k"], seed=0)
 cat = build_catalogue(X, t_grid, D, k=res.k, dtw_window=10, result=res)
 cat.to_json("catalogue.json")
 
-# 5. assign a NEW curve — with conformal guarantees
+# 5. assign a NEW curve: with conformal guarantees
 assigner = ConformalAssigner(cat).fit(X_calibration, labels_calibration)
 out = assigner.predict(new_curve, alpha=0.1)
 out.point_prediction      # nearest medoid
@@ -112,7 +112,7 @@ out.out_of_catalogue      # honest "this shape is not in the catalogue" flag
   **out-of-catalogue** flag, never silently replaced by the nearest medoid. Mind the finite-sample
   floor: the minimum achievable p-value is 1/(n_c+1), so α below that cannot produce empty sets.
 - **Attribution gate:** if the Random Forest cannot predict the labels from the descriptors
-  (held-out accuracy below the gate), SHAP/permutation importances are withheld — noise is not
+  (held-out accuracy below the gate), SHAP/permutation importances are withheld, noise is not
   reported as insight. SHAP and permutation rankings are cross-checked (Spearman agreement).
 - **Physics validation:** the synthetic generators are tested against closed-form limits
   (homogeneous late-time `0.5(ln tD + 0.80907)`, derivative plateau 0.5, Warren-Root → homogeneous
@@ -120,9 +120,9 @@ out.out_of_catalogue      # honest "this shape is not in the catalogue" flag
 
 ## Docs
 
-- [docs/theory.md](docs/theory.md) — the science: PTA derivatives, DTW, PAM, conformal prediction, attribution pitfalls (with references)
-- [docs/quickstart.md](docs/quickstart.md) — worked end-to-end example
-- [docs/design.md](docs/design.md) — package design, licensing rationale, Pyodide lane, API stability
+- [docs/theory.md](docs/theory.md): the science: PTA derivatives, DTW, PAM, conformal prediction, attribution pitfalls (with references)
+- [docs/quickstart.md](docs/quickstart.md): worked end-to-end example
+- [docs/design.md](docs/design.md): package design, licensing rationale, Pyodide lane, API stability
 
 ## Development
 

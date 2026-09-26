@@ -1,4 +1,4 @@
-"""pygeotypes — shape catalogues of physical response signals.
+"""pygeotypes, shape catalogues of physical response signals.
 
 Build a catalogue of behaviour types (GeoTypes) from response signals whose *shape* reflects the
 underlying physical system (pressure transients, pumping tests, thermal response tests, ...), and
@@ -33,7 +33,7 @@ from pygeotypes.synthetic import (
     generate_warren_root_ensemble,
 )
 
-__version__ = "0.1.2"          # PEP 440; display form 0.01.002 (CHANGELOG)
+__version__ = "0.1.3"          # PEP 440; display form 0.01.002 (CHANGELOG)
 __display_version__ = "0.01.000"
 
 __all__ = [
