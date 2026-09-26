@@ -3,15 +3,21 @@
 All notable changes to `pygeotypes`. Display format `X.XX.XXX` (CAOS convention); PEP 440 mirror in
 `pyproject.toml`. Tag every release.
 
-## [0.01.002] — 2026-07-03
+## [0.01.003]: 2026-09-26
+
+### Changed
+
+- No em-dash in the product's content (ADR-0067); the archetype's content guard runs in CI.
+
+## [0.01.002]: 2026-07-03
 
 ### Changed
 - **Package renamed to `pygeotypes`** (distribution AND import): the bare `geotypes` is taken on
   PyPI by an unrelated geospatial package, and an internal-prefix distribution (`caos-…`) carries
-  no public meaning — Felipe's call. `import pygeotypes` everywhere; the GitHub repo keeps its
+  no public meaning, Felipe's call. `import pygeotypes` everywhere; the GitHub repo keeps its
   internal CAOS_GeoTypes name (like CAOS_MINEHAUL/minehaulsim). Consumers update one import.
 
-## [0.01.001] — 2026-07-03
+## [0.01.001]: 2026-07-03
 
 ### Changed
 - PyPI distribution name set to **`pygeotypes`** (the bare `pygeotypes` is taken on PyPI by an
@@ -19,10 +25,10 @@ All notable changes to `pygeotypes`. Display format `X.XX.XXX` (CAOS convention)
   Co-install collision documented in the README.
 
 ### Added
-- `publish-pypi.yml` (Trusted Publishing / OIDC) — publishing awaits the pending-publisher
+- `publish-pypi.yml` (Trusted Publishing / OIDC): publishing awaits the pending-publisher
   registration and the explicit opt-in to publish (repo stays private until then).
 
-## [0.01.000] — 2026-07-03
+## [0.01.000]: 2026-07-03
 
 ### Added
 - Initial release of the full core, pure numpy/scipy (Pyodide-safe):
@@ -34,7 +40,7 @@ All notable changes to `pygeotypes`. Display format `X.XX.XXX` (CAOS convention)
     distances; silhouette-from-distances; `select_k` diagnostics.
   - `catalogue`: the persistent `Catalogue` artifact (medoid curves, labels, preprocessing +
     provenance metadata, `schema_version`), exact JSON round-trip.
-  - `assign`: nearest-medoid + `ConformalAssigner` — class-conditional split-conformal p-values,
+  - `assign`: nearest-medoid + `ConformalAssigner`: class-conditional split-conformal p-values,
     prediction sets, out-of-catalogue flag; JSON persistence of calibration scores.
   - `attribute` (extra `[attr]`): Spearman correlation pruning, Random-Forest with held-out
     accuracy gate, TreeSHAP per-class importances + permutation-importance cross-check.

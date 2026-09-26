@@ -28,6 +28,8 @@ jobs:
         run: ruff check src tests
       - name: Tests
         run: pytest -q
+      - name: No em-dash and no emoji in tracked content (ADR-0067)
+        run: python scripts/check_content_standards.py
   core-only:
     # proves the pure core imports and its tests pass WITHOUT the extras (the Pyodide posture)
     runs-on: ubuntu-latest

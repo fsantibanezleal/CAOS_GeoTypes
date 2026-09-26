@@ -1,4 +1,4 @@
-# Quickstart — from raw curves to a guaranteed assignment
+# Quickstart: from raw curves to a guaranteed assignment
 
 A complete, runnable walk-through (also exercised by the test suite). Scenario: you have an
 ensemble of pressure-transient responses (here synthetic Warren-Root; in FlowDNA they come from
@@ -37,7 +37,7 @@ from pygeotypes.preprocess import prepare_curves          # the one-call version
 t_grid, X = prepare_curves(
     t_list, p_list,
     n_points=96,
-    derivative_order=2,   # p'' — offset-free (Freites et al. 2023); use 1 to see the classic valley
+    derivative_order=2,   # p'', offset-free (Freites et al. 2023); use 1 to see the classic valley
     L=0.2,                # Bourdet smoothing window (log cycles)
     norm="zscore",
 )
@@ -83,14 +83,14 @@ assigner.to_json("calibration.json")            # bake for the live lane
 
 out = assigner.predict(x_new, alpha=0.1)
 print(out.point_prediction)   # nearest medoid
-print(out.prediction_set)     # e.g. [1] tight, or [1, 3] ambiguous — both honest
+print(out.prediction_set)     # e.g. [1] tight, or [1, 3] ambiguous, both honest
 print(out.out_of_catalogue)   # True → this shape is NOT in the catalogue at 90% confidence
 ```
 
 Calibration-size rule: empty sets (OOD) are only reachable when `n_c ≥ 1/alpha − 1` per class
 (the conformal p-value floor is `1/(n_c+1)`).
 
-## 6. Attribution — what controls each behaviour
+## 6. Attribution: what controls each behaviour
 
 ```python
 import numpy as np
@@ -102,13 +102,13 @@ report = attribute_geotypes(
     res.labels, ["log_omega", "log_lam", "skin"],
     accuracy_gate=0.7, seed=0,
 )
-report["gate"]                # accuracy + passed — if not passed, importances are withheld
+report["gate"]                # accuracy + passed, if not passed, importances are withheld
 report["shap_mean_abs"]       # per GeoType: which descriptor drives membership
 report["rank_agreement_spearman"]  # SHAP vs permutation cross-check
 ```
 
 For real fracture networks, replace (ω, λ, skin) with DFN descriptors (P32 intensity, length-law
-exponent, orientation κ, aperture stats, percolation parameter, backbone fraction) — that layer
+exponent, orientation κ, aperture stats, percolation parameter, backbone fraction), that layer
 lives in the consuming product (FlowDNA), not in this package.
 
 ## 7. In the browser (Pyodide sketch)

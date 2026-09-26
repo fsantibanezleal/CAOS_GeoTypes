@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "pygeotypes"  # PyPI distribution AND import name (the bare `geotypes` is taken on PyPI by an unrelated geospatial package)
 # PEP 440 form of the display version X.XX.XXX (see CHANGELOG.md + pygeotypes.__version__).
-version = "0.1.2"
+version = "0.1.3"
 description = "Shape catalogues of physical response signals: derivative preprocessing, banded DTW, PAM k-medoids, conformal assignment, RF/SHAP attribution. Pure-numpy core (Pyodide-safe)."
 readme = "README.md"
 requires-python = ">=3.11"
