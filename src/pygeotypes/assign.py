@@ -1,4 +1,4 @@
-"""Assignment of new curves to a GeoType catalogue — plain and conformal.
+"""Assignment of new curves to a GeoType catalogue, plain and conformal.
 
 `nearest_medoid` is the paper's implicit rule (closest medoid in DTW). The *conformal* assigner is
 the novel layer: split-conformal prediction with a class-conditional (Mondrian) calibration turns
@@ -8,7 +8,7 @@ the catalogue into a decision tool with finite-sample guarantees:
   {g : p_g > alpha}; under exchangeability the set covers the true GeoType with
   probability ≥ 1 − alpha *per class* (Vovk et al. 2005; Angelopoulos & Bates 2023).
 - an **empty set** is an honest out-of-catalogue flag: the curve's shape is not consistent with
-  ANY behaviour class at the requested confidence — exactly the case a characterisation workflow
+  ANY behaviour class at the requested confidence, exactly the case a characterisation workflow
   must surface instead of silently forcing the nearest medoid.
 
 Nonconformity score: DTW distance to the class medoid (pure numpy; live-lane safe).

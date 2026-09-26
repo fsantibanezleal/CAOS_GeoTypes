@@ -1,7 +1,7 @@
 """Analytical pressure-transient generators (Warren-Root dual-porosity, homogeneous radial).
 
 These solutions serve three roles: (1) the *classical* rung of the model ladder, (2) fast synthetic
-ensembles for tests and demos, (3) the live browser lane (pure numpy + scipy.special — Pyodide-safe;
+ensembles for tests and demos, (3) the live browser lane (pure numpy + scipy.special, Pyodide-safe;
 no compiled Laplace-inversion dependency).
 
 Physics (dimensionless, line-source producing well, infinite-acting reservoir):
@@ -15,7 +15,7 @@ Physics (dimensionless, line-source producing well, infinite-acting reservoir):
       pwD_wbs(s) = ( s·pwD(s) + S ) / ( s·( 1 + CD·s·( s·pwD(s) + S ) ) )
 
 Numerical inversion: the Gaver-Stehfest algorithm (Stehfest 1970, CACM 13(1):47-49) with even N
-(default 12) — the standard choice in well testing; accurate for these smooth monotone solutions.
+(default 12), the standard choice in well testing; accurate for these smooth monotone solutions.
 """
 
 from __future__ import annotations

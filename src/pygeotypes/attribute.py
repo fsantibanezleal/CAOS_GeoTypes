@@ -2,14 +2,14 @@
 
 Standard recipe (the paper's, hardened against its known pitfalls):
 
-1. **Correlation pruning** first — fracture-network descriptors are correlated by construction
+1. **Correlation pruning** first: fracture-network descriptors are correlated by construction
    (e.g. P21/P32/intensity), and both impurity importances and SHAP split credit arbitrarily
    between correlated features. Pruning to a representative subset makes attributions readable.
 2. **Random-Forest classifier** on the GeoType labels, with a held-out **accuracy gate**: if the
    forest cannot predict the labels from the descriptors, its attributions are noise and the run
    is flagged instead of reported.
 3. **TreeSHAP** global importances (mean |SHAP| per class) cross-checked against **permutation
-   importance** — agreement between the two is reported; disagreement is a red flag, not a result.
+   importance**, agreement between the two is reported; disagreement is a red flag, not a result.
 
 Imports of sklearn/shap are deferred so the pure-numpy core stays importable without the extra.
 """
